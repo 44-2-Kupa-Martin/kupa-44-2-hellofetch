@@ -2,11 +2,11 @@
 
 // populates the table
 function populateTable() {
-  if (let user in users) { //goes through the indexes of the array users
+  for (let user in users) { //goes through the indexes of the array users
       delete user.__id; //deletes key __id
       delete user.__v; // deletes key __v
       let row = document.createElement('tr'); // creates a row
-      if (let key of user) { //goes through the keys of the object user
+      for (let key of user) { //goes through the keys of the object user
           let column = document.createElement('td'); //creates a table cell
           column.innerHTML = user[key];
           row.append(column);
