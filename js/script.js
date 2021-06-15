@@ -1,12 +1,12 @@
 
 
 // populates the table
-function populateTable() {
-  for (let user in users) { //goes through the indexes of the array users
-      delete user.__id; //deletes key __id
-      delete user.__v; // deletes key __v
+function populateTable(users) {
+  for (let user of users) { //goes through the values of the of the array users
+      delete user._id; //deletes index _id
+      delete user.__v; // deletes index __v
       let row = document.createElement('tr'); // creates a row
-      for (let key of user) { //goes through the keys of the object user
+      for (let key in user) { //goes through the properties of the object user?
           let column = document.createElement('td'); //creates a table cell
           column.innerHTML = user[key];
           row.append(column);
@@ -26,6 +26,13 @@ function fetchData() {
 function fetchUser() {
   let id = document.getElementById('userId').value; //get userId value
   if (isNaN(id)) return; // if userId is NaN, terminate
+  if (id === '') { //if userId doest have any value, fetchData
+    let oldTBody = document.getElementById('tbody');
+    let newTBody = document.createElement('tbody');
+    newTBody.id = 'tbody';
+    oldTBody.replaceWith(newTBody);
+    fetchData();
+  }
   fetch(`https://kupa-44-2-hellodb.herokuapp.com/api/user/${id}`)
     .then(res => res.json())
     .then(user => {
